@@ -12,9 +12,9 @@ namespace GridSplitter
             {
                 return new Image
                 {
-                    Source ="resize_horizontal.jpg",
-                    WidthRequest = 50,
-                    HeightRequest = 50
+                    Source ="oip.webp",
+                    WidthRequest = 25,
+                    HeightRequest = 15
                 };
             });
         }

@@ -4,7 +4,7 @@
              xmlns:gridSplitter="clr-namespace:Syncfusion.Maui.GridSplitter;assembly=Syncfusion.Maui.GridSplitter"
              x:Class="GridSplitter.MainPage">
 
-    <gridSplitter:SfGridSplitter x:Name="gridSplitter">
+    <gridSplitter:SfGridSplitter x:Name="gridSplitter" SeparatorSize="15">
         <gridSplitter:SplitterPane BackgroundColor="AntiqueWhite">
             <Label Text="Pane 1"
                    HorizontalTextAlignment="Center"
