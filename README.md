@@ -1,58 +1,101 @@
 # How to Customize the Resize Icon in .NET MAUI Grid Splitter
 
-The .NET MAUI `SfGridSplitter` control provides a resize indicator that helps users identify the draggable area between adjacent panes. While the default resize icon is suitable for most applications, some scenarios require a custom visual appearance to align with application branding or design requirements. By customizing the resize icon, developers can provide a unique visual experience while retaining the splitter's built-in resizing functionality.
+This repository contains a sample that demonstrates how to customize the resize icon in the .NET MAUI Grid Splitter control. By default, the `SfGridSplitter` displays a standard resize handle between panes. However, you can replace the default resize icon with a custom image that better matches your application's design and branding requirements.
 
-This example demonstrates how to replace the default resize icon by assigning a custom `DataTemplate` to the `ResizeIconTemplate` property. The template displays an image as the resize indicator, allowing the splitter to present a customized appearance.
+Customizing the resize icon helps improve the visual appearance of the splitter and provides a more personalized user experience. The `ResizeIconTemplate` property allows developers to define custom content that will be displayed as the resize handle. This content can be an image, icon, shape, or any other .NET MAUI view.
 
-## Step 1: Define the Grid Splitter Layout in XAML
+In this example, a custom image is assigned to the splitter's resize handle using a `DataTemplate`. When the application runs, the specified image is displayed between the panes, allowing users to identify and interact with the splitter more easily.
 
-The following XAML creates an `SfGridSplitter` with two resizable panes. The `x:Name` attribute allows the splitter instance to be accessed from the code-behind, where the custom resize icon template is configured.
+## Sample
 
-```xaml
-<gridSplitter:SfGridSplitter x:Name="gridSplitter">
-    <gridSplitter:SplitterPane BackgroundColor="AntiqueWhite">
-        <Label Text="Pane 1"
-               HorizontalTextAlignment="Center"
-               VerticalTextAlignment="Center" />
-    </gridSplitter:SplitterPane>
+### XAML
 
-    <gridSplitter:SplitterPane BackgroundColor="RosyBrown">
-        <Label Text="Pane 2"
-               HorizontalTextAlignment="Center"
-               VerticalTextAlignment="Center" />
-    </gridSplitter:SplitterPane>
+```xml
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:gridSplitter="clr-namespace:Syncfusion.Maui.GridSplitter;assembly=Syncfusion.Maui.GridSplitter"
+             x:Class="GridSplitter.MainPage">
 
-</gridSplitter:SfGridSplitter>
+    <gridSplitter:SfGridSplitter x:Name="gridSplitter">
+
+        <gridSplitter:SplitterPane BackgroundColor="AntiqueWhite">
+            <Label Text="Pane 1"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+        </gridSplitter:SplitterPane>
+
+        <gridSplitter:SplitterPane BackgroundColor="RosyBrown">
+            <Label Text="Pane 2"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+        </gridSplitter:SplitterPane>
+
+    </gridSplitter:SfGridSplitter>
+
+</ContentPage>
 ```
 
-## Step 2: Customize the Resize Icon in C#
-
-The following code assigns a custom `DataTemplate` to the `ResizeIconTemplate` property. The template displays the `dotnet_bot.png` image as the resize indicator, replacing the default resize icon displayed by the splitter.
+### C#
 
 ```csharp
-public MainPage()
-{
-    InitializeComponent();
+using Syncfusion.Maui.GridSplitter;
 
-    gridSplitter.ResizeIconTemplate = new DataTemplate(() =>
+namespace GridSplitter
+{
+    public partial class MainPage : ContentPage
     {
-        return new Image
+        public MainPage()
         {
-            Source = "dotnet_bot.png",
-            WidthRequest = 86,
-            HeightRequest = 98
-        };
-    });
+            InitializeComponent();
+
+            gridSplitter.ResizeIconTemplate = new DataTemplate(() =>
+            {
+                return new Image
+                {
+                    Source = "dotnet_bot.png",
+                    WidthRequest = 50,
+                    HeightRequest = 50
+                };
+            });
+        }
+    }
 }
 ```
 
+## Explanation
+
+The `ResizeIconTemplate` property is used to customize the resize handle displayed by the `SfGridSplitter`. The property accepts a `DataTemplate`, enabling developers to define custom visual content for the resize indicator.
+
+In this example:
+
+- The Grid Splitter contains two resizable panes.
+- Each pane displays simple text content.
+- A custom image named `dotnet_bot.png` is assigned to the resize icon.
+- The image is displayed between the panes instead of the default resize handle.
+- The custom icon retains the splitter's resizing functionality.
+- Users can drag the custom icon to resize adjacent panes.
+
 ## Output
 
-- Displays two panes separated by a draggable splitter.
-- Replaces the default resize icon with a custom image.
-- Shows the specified image as the splitter's resize indicator.
-- Preserves the pane resizing behavior.
-- Enables a customized visual appearance for the splitter.
-- Allows the resize handle to match application-specific branding and design requirements.
+When the application runs, the following behavior can be observed:
 
-Using the `ResizeIconTemplate` property, you can customize the resize indicator of the `SfGridSplitter` to create a more engaging and visually consistent user experience while maintaining the control's built-in resizing functionality.
+- Two panes are displayed inside the Grid Splitter.
+- A custom resize icon appears between the panes.
+- The custom image replaces the default splitter resize icon.
+- Users can drag the custom image to resize the panes.
+- The pane sizes are updated dynamically during interaction.
+- The customized resize handle improves the overall visual appearance of the layout.
+
+## Use Cases
+
+Custom resize icons can be useful in the following scenarios:
+
+- Enterprise applications with custom branding requirements.
+- Dashboard layouts with themed user interfaces.
+- Design-focused applications that require a unique appearance.
+- Applications that use icon libraries instead of standard controls.
+- Products that need a consistent visual language across all UI elements.
+
+## Conclusion
+
+The .NET MAUI Grid Splitter provides the `ResizeIconTemplate` property to easily customize the appearance of the resize handle. By defining a custom `DataTemplate`, developers can replace the default resize icon with any image or visual element while preserving the built-in resizing behavior. This flexibility makes it easy to create visually appealing and branded application layouts.
