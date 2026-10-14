@@ -1,10 +1,12 @@
-# How to Customize the Resize Icon in .NET MAUI Grid Splitter
+# How to Implement Nested Grid Splitters in .NET MAUI
 
-This repository contains a sample that demonstrates how to customize the resize icon in the .NET MAUI Grid Splitter control. By default, the `SfGridSplitter` displays a standard resize handle between panes. However, you can replace the default resize icon with a custom image that better matches your application's design and branding requirements.
+This repository contains a sample explaining how to implement nested Grid Splitters in .NET MAUI using the Syncfusion `SfGridSplitter` control.
 
-Customizing the resize icon helps improve the visual appearance of the splitter and provides a more personalized user experience. The `ResizeIconTemplate` property allows developers to define custom content that will be displayed as the resize handle. This content can be an image, icon, shape, or any other .NET MAUI view.
+Nested Grid Splitters enable developers to create complex and highly flexible layouts by placing one `SfGridSplitter` inside another. This approach is useful when applications require multiple resizable regions that can be adjusted independently. Common scenarios include dashboard applications, file explorers, development tools, management systems, and data analysis applications where users need precise control over the available screen space.
 
-In this example, a custom image is assigned to the splitter's resize handle using a `DataTemplate`. When the application runs, the specified image is displayed between the panes, allowing users to identify and interact with the splitter more easily.
+In this example, the primary Grid Splitter is configured with a vertical orientation, dividing the interface into a navigation pane on the left and a content area on the right. The content area contains another Grid Splitter configured with a horizontal orientation. This nested splitter further divides the space into Content and Details panes, allowing users to resize both sections independently.
+
+By combining multiple Grid Splitters, developers can build sophisticated layouts while maintaining a consistent and intuitive user experience. The nested splitter automatically manages pane sizing and updates the layout dynamically when users drag any splitter.
 
 ## Sample
 
@@ -16,18 +18,43 @@ In this example, a custom image is assigned to the splitter's resize handle usin
              xmlns:gridSplitter="clr-namespace:Syncfusion.Maui.GridSplitter;assembly=Syncfusion.Maui.GridSplitter"
              x:Class="GridSplitter.MainPage">
 
-    <gridSplitter:SfGridSplitter x:Name="gridSplitter">
+    <gridSplitter:SfGridSplitter Orientation="Vertical">
 
-        <gridSplitter:SplitterPane BackgroundColor="AntiqueWhite">
-            <Label Text="Pane 1"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center" />
+        <!-- Left Pane -->
+        <gridSplitter:SplitterPane>
+            <Border Background="#D6EAF8"
+                    Padding="10">
+                <Label Text="Navigation Pane"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
         </gridSplitter:SplitterPane>
 
-        <gridSplitter:SplitterPane BackgroundColor="RosyBrown">
-            <Label Text="Pane 2"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center" />
+        <!-- Right Pane with Nested Splitter -->
+        <gridSplitter:SplitterPane>
+
+            <gridSplitter:SfGridSplitter Orientation="Horizontal">
+
+                <gridSplitter:SplitterPane>
+                    <Border Background="#D5F5E3"
+                            Padding="10">
+                        <Label Text="Content Pane"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                </gridSplitter:SplitterPane>
+
+                <gridSplitter:SplitterPane>
+                    <Border Background="#FADBD8"
+                            Padding="10">
+                        <Label Text="Details Pane"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                </gridSplitter:SplitterPane>
+
+            </gridSplitter:SfGridSplitter>
+
         </gridSplitter:SplitterPane>
 
     </gridSplitter:SfGridSplitter>
@@ -35,67 +62,69 @@ In this example, a custom image is assigned to the splitter's resize handle usin
 </ContentPage>
 ```
 
-### C#
+## How It Works
 
-```csharp
-using Syncfusion.Maui.GridSplitter;
+The outer `SfGridSplitter` uses a vertical orientation to divide the page into two major sections:
 
-namespace GridSplitter
-{
-    public partial class MainPage : ContentPage
-    {
-        public MainPage()
-        {
-            InitializeComponent();
+- Navigation Pane
+- Content Area
 
-            gridSplitter.ResizeIconTemplate = new DataTemplate(() =>
-            {
-                return new Image
-                {
-                    Source = "dotnet_bot.png",
-                    WidthRequest = 50,
-                    HeightRequest = 50
-                };
-            });
-        }
-    }
-}
-```
+The Content Area contains another `SfGridSplitter` configured with a horizontal orientation. This nested Grid Splitter creates two additional panes:
 
-## Explanation
+- Content Pane
+- Details Pane
 
-The `ResizeIconTemplate` property is used to customize the resize handle displayed by the `SfGridSplitter`. The property accepts a `DataTemplate`, enabling developers to define custom visual content for the resize indicator.
+As a result, the layout consists of three functional regions:
 
-In this example:
+1. Navigation Pane
+2. Content Pane
+3. Details Pane
 
-- The Grid Splitter contains two resizable panes.
-- Each pane displays simple text content.
-- A custom image named `dotnet_bot.png` is assigned to the resize icon.
-- The image is displayed between the panes instead of the default resize handle.
-- The custom icon retains the splitter's resizing functionality.
-- Users can drag the custom icon to resize adjacent panes.
+Users can interact with both splitters independently:
+
+- The outer splitter resizes the Navigation Pane and Content Area.
+- The inner splitter resizes the Content Pane and Details Pane.
+- Layout updates occur automatically while dragging either splitter.
+- Each pane can host any .NET MAUI view, including forms, charts, lists, images, and custom controls.
 
 ## Output
 
 When the application runs, the following behavior can be observed:
 
-- Two panes are displayed inside the Grid Splitter.
-- A custom resize icon appears between the panes.
-- The custom image replaces the default splitter resize icon.
-- Users can drag the custom image to resize the panes.
-- The pane sizes are updated dynamically during interaction.
-- The customized resize handle improves the overall visual appearance of the layout.
+- A navigation pane appears on the left side of the screen.
+- A content area appears on the right side.
+- The content area is further divided into Content and Details panes.
+- The outer splitter can be dragged to resize the navigation section.
+- The inner splitter can be dragged to resize the content and details sections.
+- Both splitters work independently without affecting each other's functionality.
+- Pane sizes update dynamically at runtime.
+- The layout remains responsive across different screen sizes and orientations.
 
-## Use Cases
+## Benefits of Nested Grid Splitters
 
-Custom resize icons can be useful in the following scenarios:
+Nested Grid Splitters provide several advantages for building advanced user interfaces:
 
-- Enterprise applications with custom branding requirements.
-- Dashboard layouts with themed user interfaces.
-- Design-focused applications that require a unique appearance.
-- Applications that use icon libraries instead of standard controls.
-- Products that need a consistent visual language across all UI elements.
+- Create multi-level resizable layouts.
+- Organize large amounts of content efficiently.
+- Improve screen space utilization.
+- Allow users to customize pane sizes based on their workflow.
+- Support complex dashboard and workspace scenarios.
+- Provide a desktop-like experience in .NET MAUI applications.
+- Reduce the need for custom layout calculations.
+
+## Common Use Cases
+
+Nested Grid Splitters are particularly useful for:
+
+- File explorer applications.
+- Project management dashboards.
+- Data analytics solutions.
+- Reporting tools.
+- Development environments.
+- Administrative portals.
+- Customer management systems.
+- Monitoring and control dashboards.
 
 ## Conclusion
 
-The .NET MAUI Grid Splitter provides the `ResizeIconTemplate` property to easily customize the appearance of the resize handle. By defining a custom `DataTemplate`, developers can replace the default resize icon with any image or visual element while preserving the built-in resizing behavior. This flexibility makes it easy to create visually appealing and branded application layouts.
+The Syncfusion `SfGridSplitter` makes it easy to implement nested resizable layouts in .NET MAUI applications. By placing one Grid Splitter inside another, developers can create rich and flexible interfaces that allow users to adjust multiple regions independently. This approach enhances usability, improves workspace organization, and helps build professional desktop-style applications across all supported .NET MAUI platforms.
