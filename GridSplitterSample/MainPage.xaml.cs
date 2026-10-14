@@ -12,7 +12,7 @@ namespace GridSplitter
             {
                 return new Image
                 {
-                    Source = "dotnet_bot.png",
+                    Source ="resize_horizontal.jpg",
                     WidthRequest = 50,
                     HeightRequest = 50
                 };
